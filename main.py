@@ -17,7 +17,7 @@ def scan_media(file_path):
 
     # If condition for error handling 
     if check is not True:
-        print("File does not exist!")
+        print("The file does not exist or is not in the appropriate convention!")
         
     # Else condition to extract the format of the file
     else:
@@ -25,8 +25,22 @@ def scan_media(file_path):
         # Extracts the extension to determine if media is static or moving text
         
         print(f"File detected with extension : {extension}")
+        # Informs the user whether the system can detect the file
 
+        format = extension.lower()
+        # Variable that contains the lowercase string of the file extension
 
+        if format in [".jpg", ".jpeg", ".png"]:
+            print("Routing to Pillow for static image processing...")
+            # If condition to send data to its respective function 
+
+        elif format in [".mp4",  ".avi", ".gif"]:
+            print("Routing to Open Cv for video slicing....")
+            # elif condition to send data to its respective function 
+
+        else:
+            print("Error, unsupported media format.")
+            # Else statement for error handling 
 
 # Test execution
 if __name__ == "__main__":
