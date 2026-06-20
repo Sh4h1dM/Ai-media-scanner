@@ -30,17 +30,42 @@ def scan_media(file_path):
         format = extension.lower()
         # Variable that contains the lowercase string of the file extension
 
+        # If condition to send data to its respective function 
         if format in [".jpg", ".jpeg", ".png"]:
             print("Routing to Pillow for static image processing...")
-            # If condition to send data to its respective function 
+            process_static_image(file_path)
 
+        # elif condition to send data to its respective function 
         elif format in [".mp4",  ".avi", ".gif"]:
             print("Routing to Open Cv for video slicing....")
-            # elif condition to send data to its respective function 
 
+        # Else statement for error handling 
         else:
             print("Error, unsupported media format.")
-            # Else statement for error handling 
+
+
+# Function 2 - Extracting information from the given image via the Pillow library
+def process_static_image(image_path):
+
+    """
+    STAGE 1b: Pillow Guard (Static Media Ingestion)
+    Opens the validated image file, extracts core metadata, and normalizes
+    the color space to RGB to ensure compatibility with downstream AI models.
+    """
+
+
+    try: 
+        # Attempt to open the target file using Pillow
+        img = Image.open(image_path)
+
+        # Outputting image properities
+        print(f"Image format : {img.format}")
+        print(f"Image size : {img.size}")
+
+        # Error handling 
+    except Exception:
+        print("Image file is corrupted or unreadable")
+
 
 # Test execution
 if __name__ == "__main__":
