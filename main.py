@@ -1,7 +1,14 @@
-import os # Interacts wuth the file system to verify file existence
-from PIL import Image # Security measure for corrupted files and validates media 
-import cv2 # Can process .mp4 and .avi file to read videos frame by frame
+import os 
+# Interacts wuth the file system to verify file existence
 
+from PIL import Image 
+# Security measure for corrupted files and validates media 
+
+import cv2 
+# Can process .mp4 and .avi file to read videos frame by frame
+
+import numpy as np 
+# To convert visual image into a massive, multi dimension array of raw numerical data using NumPy
 
 # Function 1 - handing file input and authentication before processing media 
 def scan_media(file_path):
@@ -53,7 +60,7 @@ def process_static_image(image_path):
     the color space to RGB to ensure compatibility with downstream AI models.
     """
 
-
+ 
     try: 
         # Attempt to open the target file using Pillow
         img = Image.open(image_path)
@@ -61,6 +68,20 @@ def process_static_image(image_path):
         # Outputting image properities
         print(f"Image format : {img.format}")
         print(f"Image size : {img.size}")
+
+        # Variable holds the visual image into a mathematical grid
+        img_array = np.array(img)
+
+
+        # Prints the shape and the number type
+        print(img_array.shape)
+        print(img_array.dtype)
+
+        # Data normalization - turns pixel integers down to decimals 
+        normalised_array = img_array/255
+
+        # Unit test for the created variable
+        print(normalised_array)
 
         # Error handling 
     except Exception:
