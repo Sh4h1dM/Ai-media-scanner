@@ -10,11 +10,12 @@ import cv2
 import numpy as np 
 # To convert visual image into a massive, multi dimension array of raw numerical data using NumPy
 
+
 # Function 1 - handing file input and authentication before processing media 
 def scan_media(file_path):
 
     """
-    STAGE 1: Input Ingestion Gatekeeper
+    STAGE 1: Input Ingestion
     Validates file existence, determines media type via extension extraction, 
     and routes the file to the appropriate processing pipeline (Pillow or OpenCV).
     """
@@ -57,10 +58,9 @@ def process_static_image(image_path):
     """
     STAGE 1b: Pillow Guard (Static Media Ingestion)
     Opens the validated image file, extracts core metadata, and normalizes
-    the color space to RGB to ensure compatibility with downstream AI models.
+    the color space to RGB to ensure compatibility with AI models.
     """
 
- 
     try: 
         # Attempt to open the target file using Pillow
         img = Image.open(image_path)
@@ -71,7 +71,6 @@ def process_static_image(image_path):
 
         # Variable holds the visual image into a mathematical grid
         img_array = np.array(img)
-
 
         # Prints the shape and the number type
         print(img_array.shape)
@@ -88,6 +87,53 @@ def process_static_image(image_path):
         print("Image file is corrupted or unreadable")
 
 
+# Processing video files frame-by-frame via OpenCV
+def process_motion_image(video_path):
+
+    """
+    STAGE 1c: OpenCV Guard (Motion Media Ingestion)
+    Opens a video stream, verifies file integrity, and prepares the 
+    frame-by-frame processing pipeline.
+    """
+
+    try: 
+
+        # cap variable to allow library to interact with the video file
+        cap = cv2.VideoCapture(video_path)
+
+        # Error handling in the event that cv2 is not able to process video
+        if not cap.isOpened():
+            print("File is corrupted or unreadable.")
+            return 
+        
+        # transparency to the user, notifying them if the file is successful 
+        else:
+            print("Video stream intialized successfully.")
+
+
+            # While loop to continuously reads captured images until completing the contents of pictures within the video
+            while True:
+
+                # grabes the stream statys as a booleon and the raw pixels
+                success, frame = cap.read()
+
+                # breaks loop when all frames have finished (end of video)
+                if not success:
+                    
+                    break
+
+                #Turns the colour laypout to RGB and turns pixels into decimal points via division operator 
+                converted_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) / 255
+
+
+            # Terminate video pipline and release back into the OS
+            cap.release()
+
+        # Layer for unexpected system errors 
+    except Exception:
+        print("An error has occured during video processing.")
+
 # Test execution
 if __name__ == "__main__":
-    scan_media("test_image.jpg")
+    #scan_media("test_image.jpg")
+    process_motion_image("test_video.mp4")
