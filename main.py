@@ -138,5 +138,4 @@ def process_motion_image(video_path):
 
 # Test execution
 if __name__ == "__main__":
-    #scan_media("test_image.jpg")
-    process_motion_image("test_video.mp4")
+    scan_media("test_video.mp4")
