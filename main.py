@@ -46,6 +46,8 @@ def scan_media(file_path):
         # elif condition to send data to its respective function 
         elif format in [".mp4",  ".avi", ".gif"]:
             print("Routing to Open Cv for video slicing....")
+            process_motion_image(file_path)
+
 
         # Else statement for error handling 
         else:
@@ -132,6 +134,7 @@ def process_motion_image(video_path):
         # Layer for unexpected system errors 
     except Exception:
         print("An error has occured during video processing.")
+        
 
 # Test execution
 if __name__ == "__main__":
